@@ -27,20 +27,36 @@ for (var j = 0; j < 5; j += 1) {
  * @param x and @param y - initial position of the enemy
  * @param speed - speed of the enemy
  * */
+
+const rows = populateRows();
+function populateRows() {
+  let row = [];
+  let initialValue = 60;
+  i = 0;
+  while (i <= 9) {
+    let rowYPosition = 60 + i * 82;
+    row.push(rowYPosition);
+    i++;
+  }
+  return row;
+}
 const GLOBAL_CONSTANTS = {
   INITAL_POSITION_X: 500,
-  INITAL_POSITION_Y: 710,
+  INITAL_POSITION_Y: 889,
   BOUNDARY_LEFT: 5,
   BOUNDARY_RIGHT: 1105,
   BOUNDARY_TOP: -32,
-  BOUNDARY_BOTTOM: 730,
+  BOUNDARY_BOTTOM: 889,
   NO_OF_ENEMIES: 2000,
   PLAYER_WIDTH: 20,
   PLAYER_HEIGHT: 20,
   ENEMY_WIDTH: 40,
   ENEMY_HEIGHT: 30,
-  INCREMENT_POSITION_X: 30,
-  INCREMENT_POSITION_Y: 30
+  INCREMENT_POSITION_Y: 60,
+  INCREMENT_POSITION_X: 60,
+  // INCREMENT_POSITION_Y: 30,
+  // INCREMENT_POSITION_Y: 30,
+  ENEMY_ROWS: populateRows()
 };
 var Enemy = function(sprite, x, y, speed) {
   this.sprite = sprite;
@@ -88,16 +104,17 @@ Enemy.prototype.checkCol = function() {
   //  below line conditions are optimised for best collision detection experience.
   let isCollideFlag = isCollide(this, player);
   if (isCollideFlag) {
-    document.getElementById("scoreBoard-id").style.backgroundColor = "red !important"
-    // alert("aaaa")
-  //reseting player positions on collision
+    // console.log("iscollide", this.x, player.x, "and", this.y, player.y);
+      document.getElementById("scoreBoard-id").style.background =
+      "red !important";
+    // //reseting player positions on collision
     player.x = GLOBAL_CONSTANTS.INITAL_POSITION_X;
     player.y = GLOBAL_CONSTANTS.INITAL_POSITION_Y;
-    if(Player.lives !==0) {
+    if (player.lives > 0) {
       player.lives -= 1;
     }
     livesDisplay(player.lives);
-    //condition to check game over due to loss of all lives
+    // //condition to check game over due to loss of all lives
     if (player.lives === 0) {
       modal.style.display = "block";
       modalSetup(player.currentScore, player.lives, false);
@@ -108,31 +125,6 @@ Enemy.prototype.checkCol = function() {
     player.hasCollided = true;
     player.updateScore();
   }
-
-  // if (
-  //   this.x+50 > player.x &&
-  //   player.x > this.x-10 &&
-  //    this.y+40 > player.y
-  //    ) {
-  //   console.log("collision 2", this.x, player.x,"and",  this.y, player.y);
-  //   document.getElementById("scoreBoard-id").style.backgroundColor = "red !important"
-  //   alert("aaaa")
-  // //reseting player positions on collision
-  //   player.x = GLOBAL_CONSTANTS.INITAL_POSITION_X;
-  //   player.y = GLOBAL_CONSTANTS.INITAL_POSITION_Y;
-  //   player.lives -= 1;
-  //   livesDisplay(player.lives);
-  //   //condition to check game over due to loss of all lives
-  //   if (player.lives === 0) {
-  //     modal.style.display = "block";
-  //     modalSetup(player.currentScore, player.lives, false);
-  //     return;
-  //   }
-  //   /** @param hasCollided on player - used to negate 2 points on collision
-  //    * function to update the score followed to display current score */
-  //   player.hasCollided = true;
-  //   player.updateScore();
-  // }
 };
 
 /**
@@ -146,58 +138,26 @@ var numberOfEnemies = GLOBAL_CONSTANTS.NO_OF_ENEMIES;
  * that return positions and speeds for the enemy objects
  */
 for (var i = 0; i < GLOBAL_CONSTANTS.NO_OF_ENEMIES; i += 1) {
-  // for (var i = 0; i < numberOfEnemies; i += 1) {
   allEnemies[i] = new Enemy(
     "images/enemy-bug.png",
     getX(i),
     getRow(i),
-    getSpeed(i)
+    getSpeed(i) // check for NaN error
   );
 }
 
-/**@description - this function equally distributes the enemies among 3 rows */
+/**@description - this function equally distributes the enemies among all rows */
 function getRow(j) {
-  switch (j % 10) {
-    case 0:
-      return 67;
-      break;
-    case 1:
-      return 150;
-      break;
-    case 2:
-      return 233;
-      break;
-    case 3:
-      return 400;
-      break;
-    case 4:
-      return 500;
-      break;
-    case 5:
-      return 67;
-      break;
-    case 6:
-      return 550;
-      break;
-    case 7:
-      return 150;
-      break;
-    case 8:
-      return 233;
-      break;
-    case 9:
-      return 400;
-      break;
-    case 10:
-      return 550;
-      break;
+  let enemyRowArray = GLOBAL_CONSTANTS.ENEMY_ROWS;
+  if (enemyRowArray[j % 10] !== enemyRowArray[5]) {
+    return enemyRowArray[j % 10];
   }
+  return enemyRowArray[4];
 }
 
 /**@description - get different X poosition for the enemy(higher negative arrive late to display) */
 function getX(k) {
   var temporaryX = 0;
-  // return 10;
   if (k % 3 === 0) {
     temporaryX = (k / 3) * -320;
     return temporaryX;
@@ -216,31 +176,32 @@ function getX(k) {
 function getSpeed(k) {
   if (k % 3 === 0) {
     if (k <= numberOfEnemies * 0.2) {
-      return 180;
+      return 1000;
     } else if (k > numberOfEnemies * 0.2 && k <= numberOfEnemies * 0.4) {
-      return 195;
+      return 790;
     } else if (k > numberOfEnemies * 0.4 && k <= numberOfEnemies * 0.6) {
-      return 210;
+      return 950;
     } else {
-      return 220;
+      return 600;
     }
   } else if (k % 3 === 1) {
     if (k <= numberOfEnemies / 5) {
-      return 150;
-    } else if (k > numberOfEnemies * 0.2 && k <= numberOfEnemies * 0.6) {
-      return 165;
+      return 430;
+    } else if (k > numberOfEnemies * 0.3 && k <= numberOfEnemies * 0.5) {
+      return 900;
     } else if (k > numberOfEnemies * 0.6) {
-      return 180;
+      return 400;
     }
   } else if (k % 3 === 2) {
     if (k <= numberOfEnemies / 5) {
-      return 115;
-    } else if (k > numberOfEnemies * 0.2 && k <= numberOfEnemies * 0.6) {
-      return 145;
-    } else if (k > numberOfEnemies * 0.6) {
-      return 165;
+      return 500;
+    } else if (k > numberOfEnemies * 0.2 && k <= numberOfEnemies * 0.5) {
+      return 1000;
+    } else if (k > numberOfEnemies * 0.5) {
+      return 950;
     }
   }
+  return 1000;
 }
 
 var Player = function() {
@@ -261,7 +222,6 @@ var player = new Player();
  * position on successfull cross and a call to update score
  */
 Player.prototype.update = function() {
-  console.log("player", this.x, this.y)
   if (this.y < GLOBAL_CONSTANTS.BOUNDARY_TOP) {
     this.hasCrossed = true;
     this.updateScore();
@@ -540,7 +500,9 @@ function modalSetup(score, lives, timeUpFlag) {
  */
 function livesDisplay(index) {
   const list = document.getElementsByClassName("stars");
-  list[0].children[index].children[0].classList.value = "fa fa-star-o";
+  if (list && list[0]) {
+    list[0].children[index].children[0].classList.value = "fa fa-star-o";
+  }
 }
 
 /** @param playAgain - get the Play again button on the modal and add event Listener on click */
