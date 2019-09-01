@@ -27,11 +27,25 @@ for (var j = 0; j < 5; j += 1) {
  * @param x and @param y - initial position of the enemy
  * @param speed - speed of the enemy
  * */
-
+const GLOBAL_CONSTANTS = {
+    INITAL_POSITION_X: 500,
+    INITAL_POSITION_Y: 550,
+    BOUNDARY_LEFT: 5,
+    BOUNDARY_RIGHT: 1105,
+    BOUNDARY_TOP: -32,
+    BOUNDARY_BOTTOM: 500,
+    NO_OF_ENEMIES: 2000,
+    PLAYER_WIDTH: 20,
+    PLAYER_HEIGHT: 20,
+    ENEMY_WIDTH: 40,
+    ENEMY_HEIGHT: 30,
+ }
 var Enemy = function(sprite, x, y, speed) {
   this.sprite = sprite;
   this.x = x;
   this.y = y;
+  this.height = GLOBAL_CONSTANTS.ENEMY_HEIGHT;
+  this.width = GLOBAL_CONSTANTS.ENEMY_WIDTH;
   this.speed = speed;
 };
 
@@ -57,15 +71,26 @@ Enemy.prototype.render = function() {
   }
 };
 
+function isCollide(a, b) {  
+  return !(
+      ((a.y + a.height) < (b.y)) ||
+      (a.y > (b.y + b.height)) ||
+      ((a.x + a.width) < b.x) ||
+      (a.x > (b.x + b.width))
+  );
+}
 /** @description - it continuously compares the position of enemy and player
  *  and detects collision
  */
 Enemy.prototype.checkCol = function() {
-  //below line conditions are optimised for best collision detection experience.
-  if (this.x + 50 > player.x && player.x + 40 > this.x && this.y == player.y) {
-    //reseting player positions on collision
-    player.y = 316;
-    player.x = 101;
+//  below line conditions are optimised for best collision detection experience.
+  let isCollideFlag = isCollide(this, player )
+    if(isCollideFlag) {
+    console.log("collided")
+    // alert("collided 1")
+      //reseting player positions on collision
+    player.y = GLOBAL_CONSTANTS.INITAL_POSITION_X;
+    player.x = GLOBAL_CONSTANTS.INITAL_POSITION_Y;
     player.lives -= 1;
     livesDisplay(player.lives);
     //condition to check game over due to loss of all lives
@@ -79,6 +104,31 @@ Enemy.prototype.checkCol = function() {
     player.hasCollided = true;
     player.updateScore();
   }
+  // if (
+  //   this.x+50 > player.x &&
+  //   player.x > this.x-10 &&
+  //    this.y+40 > player.y
+  //    ) {
+  //   console.log("collision 2", this.x, player.x,"and",  this.y, player.y);
+  //   document.getElementById("scoreBoard-id").style.backgroundColor = "red !important"
+  //   alert("aaaa")
+  // // //reseting player positions on collision
+  // //   player.y = GLOBAL_CONSTANTS.INITAL_POSITION_X;
+  // //   player.x = GLOBAL_CONSTANTS.INITAL_POSITION_Y;
+  // //   player.lives -= 1;
+  // //   livesDisplay(player.lives);
+  // //   //condition to check game over due to loss of all lives
+  // //   if (player.lives === 0) {
+  // //     modal.style.display = "block";
+  // //     modalSetup(player.currentScore, player.lives, false);
+  // //     return;
+  // //   }
+  // //   /** @param hasCollided on player - used to negate 2 points on collision
+  // //    * function to update the score followed to display current score */
+  // //   player.hasCollided = true;
+  // //   player.updateScore();
+  // }
+
 };
 
 /**
@@ -86,12 +136,13 @@ Enemy.prototype.checkCol = function() {
  * @param numberOfEnemies - optimised for the game play of 300 seconds.
  */
 var allEnemies = [];
-var numberOfEnemies = 700;
+var numberOfEnemies = GLOBAL_CONSTANTS.NO_OF_ENEMIES;
 
 /**@description - instantiating allenemies objects with different values from different functions
  * that return positions and speeds for the enemy objects
  */
-for (var i = 0; i < numberOfEnemies; i += 1) {
+for (var i = 0; i <  GLOBAL_CONSTANTS.NO_OF_ENEMIES; i += 1) {
+  // for (var i = 0; i < numberOfEnemies; i += 1) {
   allEnemies[i] = new Enemy(
     "images/enemy-bug.png",
     getX(i),
@@ -165,22 +216,11 @@ function getSpeed(k) {
   }
 }
 
-/** @description - player object stores different player properties
- * @param x and @param y - initial positions of the player
- * @param minPosY - value of y coordinate the bottom  most end of the canvas
- * @param maxPosY - value of y coordinate a top most end of canvas
- * @param hasCrossed - variable to store whether the player crossed the enemy flow
- * @param hasCollided - variable to check whether the player has collided with enemy
- * @param currentScore - to store the current score
- * @param lives - to store the remaining lives of the player
- */
 var Player = function() {
-  this.x = 101;
-  this.y = 316;
-  this.MinPosY = -16;
-  this.MaxPosY = 399;
-  this.MinPosX = 0;
-  this.MaxPosX = 404;
+  this.x = GLOBAL_CONSTANTS.INITAL_POSITION_X;
+  this.y = GLOBAL_CONSTANTS.INITAL_POSITION_Y;
+  this.height = GLOBAL_CONSTANTS.PLAYER_HEIGHT;
+  this.width = GLOBAL_CONSTANTS.PLAYER_WIDTH;
   this.hasCrossed = false;
   this.hasCollided = false;
   this.currentScore = 0;
@@ -194,11 +234,11 @@ var player = new Player();
  * position on successfull cross and a call to update score
  */
 Player.prototype.update = function() {
-  if (this.y === this.MinPosY) {
+  if (this.y < GLOBAL_CONSTANTS.BOUNDARY_TOP) {
     this.hasCrossed = true;
     this.updateScore();
-    this.y = 316;
-    this.x = 101;
+    this.x = GLOBAL_CONSTANTS.INITAL_POSITION_X;
+    this.y = GLOBAL_CONSTANTS.INITAL_POSITION_Y;
     return;
   }
 };
@@ -259,45 +299,39 @@ Player.prototype.render = function() {
  */
 Player.prototype.handleInput = function(k) {
   var rockIsThere;
+  let valueX = 30;
+  let valueY = 30;
   switch (k) {
     case "up":
-      if (this.y === this.MinPosY) {
-        break;
+      if (this.y <= GLOBAL_CONSTANTS.BOUNDARY_TOP) {
+        this.y = GLOBAL_CONSTANTS.INITAL_POSITION_Y;
       } else {
-        this.y -= 83;
-        if (this.x === 202 && this.y === 316) {
-          this.y += 83;
-        }
+        // this.y -= 83;
+        this.y -= valueY;
         break;
       }
     case "down":
-      if (this.y === this.MaxPosY) {
+      if (this.y > GLOBAL_CONSTANTS.BOUNDARY_BOTTOM) {
         break;
       } else {
-        this.y += 83;
-        if (this.x === 202 && this.y === 316) {
-          this.y -= 83;
-        }
+        // this.y += 83;
+        this.y += valueY;
         break;
       }
     case "left":
-      if (this.x === this.MinPosX) {
+      if (this.x < GLOBAL_CONSTANTS.BOUNDARY_LEFT) {
         break;
       } else {
-        this.x -= 101;
-        if (this.x === 202 && this.y === 316) {
-          this.x += 101;
-        }
+        // this.x -= 101;
+        this.x -= valueX;
         break;
       }
     case "right":
-      if (this.x === this.MaxPosX) {
+      if (this.x > GLOBAL_CONSTANTS.BOUNDARY_RIGHT) {
         break;
       } else {
-        this.x += 101;
-        if (this.x === 202 && this.y === 316) {
-          this.x -= 101;
-        }
+        // this.x += 101;
+        this.x += valueX;
         break;
       }
   }
@@ -498,7 +532,7 @@ function Restart() {
   timeUnit = 300;
   gameTimer = setInterval(myTimer, 1000);
   allEnemies = [];
-  numberOfEnemies = 700;
+  numberOfEnemies =  GLOBAL_CONSTANTS.NO_OF_ENEMIES;
   gameOver = false;
 
   for (var i = 0; i < numberOfEnemies; i += 1) {
