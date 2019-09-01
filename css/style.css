@@ -1,289 +1,329 @@
 body {
-    text-align: center;
-    position: relative;
+  text-align: center;
+  position: relative;
 }
 
 /* scoreboard to display current score */
-.score_board{
-    background-color: #74C568;
-    position: absolute;
-    left: 165px;
-    top : 50px;
-    width: 200px;
-    height: 125px;
-    border: 3px solid black;
+.score_board {
+  background-color: #74c568;
+  position: absolute;
+  left: 165px;
+  top: 50px;
+  width: 200px;
+  height: 125px;
+  border: 3px solid black;
 }
+/* update score styling */
+.blinking-text {
+  animation-iteration-count: 2;
+  animation: blinkingText 0.5s;
+}
+.zoomIn-text {
+    animation-iteration-count: 1;
+    animation: zoomText 0.5s;
+  }
+
+@keyframes blinkingText {
+  0% {
+    opacity: 1;
+  }
+  25% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes zoomText {
+    0% {
+      font-size: initial;
+    }
+
+    50% {
+        font-size: 50px;
+    }
+   
+    100% {
+        font-size: initial;
+    }
+  }
 
 /*timer panel to display elapsed time */
-.timer_panel{
-    background-color: #74C568;
-    position: absolute;
-    right: 165px;
-    top : 50px;
-    width: 200px;
-    height: 125px;
-    border: 3px solid black;
+.timer_panel {
+  background-color: #74c568;
+  position: absolute;
+  right: 165px;
+  top: 50px;
+  width: 200px;
+  height: 125px;
+  border: 3px solid black;
 }
 
 /* stars list to display remaining lives */
 .stars li {
-    list-style: none;
-    display: inline-block;
+  list-style: none;
+  display: inline-block;
 }
 
 /*list to display player images */
-.playerList li{
-    list-style: none;
-    display:inline-block;
+.playerList li {
+  list-style: none;
+  display: inline-block;
 }
 
 /*stars section to display remaining lives */
-.stars{
-    left: 380px;
-    position: absolute;
-    width: 505px;
-    margin: auto;
-    font-size: 20px;
+.stars {
+  left: 380px;
+  position: absolute;
+  width: 505px;
+  margin: auto;
+  font-size: 20px;
 }
 
 /* time and score text */
-.time ,
-.score{
-    font-family: 'Orbitron', sans-serif;
-    text-align: center;
+.time,
+.score {
+  font-family: "Orbitron", sans-serif;
+  text-align: center;
 }
 
-#score_now , 
-#time_left{
-    font-size: 25px;
-    font-family: 'Orbitron', sans-serif;
-    text-align: center;
+#score_now,
+#time_left {
+  font-size: 25px;
+  font-family: "Orbitron", sans-serif;
+  text-align: center;
 }
 
 /* multi break-point responsive design for different screen widths */
-@media only screen and (max-width: 1275px){
-    .score_board{
-        left: 165px;
-        top : 50px;
-        width: 170px;
-        height: 125px;
-    }
-    .timer_panel{
-        right: 165px;
-        top : 50px;
-        width: 170px;
-        height: 125px;
-    }
-    .stars{
-        left:330px;
-    }
+@media only screen and (max-width: 1275px) {
+  .score_board {
+    left: 165px;
+    top: 50px;
+    width: 170px;
+    height: 125px;
+  }
+  .timer_panel {
+    right: 165px;
+    top: 50px;
+    width: 170px;
+    height: 125px;
+  }
+  .stars {
+    left: 330px;
+  }
 }
 
 @media only screen and (max-width: 1210px) {
-    .score_board{
-        left: 135px;
-        top : 50px;
-        width: 170px;
-        height: 125px;
-    }
-    .timer_panel{
-        right: 135px;
-        top : 50px;
-        width: 170px;
-        height: 125px;
-    }
-    .stars{
-        left:290px;
-    }
+  .score_board {
+    left: 135px;
+    top: 50px;
+    width: 170px;
+    height: 125px;
+  }
+  .timer_panel {
+    right: 135px;
+    top: 50px;
+    width: 170px;
+    height: 125px;
+  }
+  .stars {
+    left: 290px;
+  }
 }
 
-@media only screen and (max-width: 1160px){
-   .score_board{
-        left: 105px;
-        top : 50px;
-        width: 170px;
-        height: 125px;
-    }
-    .timer_panel{
-        right: 105px;
-        top : 50px;
-        width: 170px;
-        height: 125px;
-    }
-    .stars{
-        left:260px;
-    }
+@media only screen and (max-width: 1160px) {
+  .score_board {
+    left: 105px;
+    top: 50px;
+    width: 170px;
+    height: 125px;
+  }
+  .timer_panel {
+    right: 105px;
+    top: 50px;
+    width: 170px;
+    height: 125px;
+  }
+  .stars {
+    left: 260px;
+  }
 }
 
-@media only screen and (max-width: 1100px){
-   .score_board{
-        left: 75px;
-        top : 50px;
-        width: 170px;
-        height: 125px;
-    }
-    .timer_panel{
-        right: 75px;
-        top : 50px;
-        width: 170px;
-        height: 125px;
-    }
-    .stars{
-        left:245px;
-    }
+@media only screen and (max-width: 1100px) {
+  .score_board {
+    left: 75px;
+    top: 50px;
+    width: 170px;
+    height: 125px;
+  }
+  .timer_panel {
+    right: 75px;
+    top: 50px;
+    width: 170px;
+    height: 125px;
+  }
+  .stars {
+    left: 245px;
+  }
 }
 
-@media only screen and (max-width: 1040px){
-   .score_board{
-        left: 45px;
-        top : 50px;
-        width: 170px;
-        height: 125px;
-    }
-    .timer_panel{
-        right: 45px;
-        top : 50px;
-        width: 170px;
-        height: 125px;
-    }
-    .stars{
-        left:205px;
-    }
+@media only screen and (max-width: 1040px) {
+  .score_board {
+    left: 45px;
+    top: 50px;
+    width: 170px;
+    height: 125px;
+  }
+  .timer_panel {
+    right: 45px;
+    top: 50px;
+    width: 170px;
+    height: 125px;
+  }
+  .stars {
+    left: 205px;
+  }
 }
 
-@media only screen and (max-width: 980px){
-   .score_board{
-        left: 15px;
-        top : 50px;
-        width: 170px;
-        height: 125px;
-    }
-    .timer_panel{
-        right: 15px;
-        top : 50px;
-        width: 170px;
-        height: 125px;
-    }
-    .stars{
-        left:170px;
-    }
+@media only screen and (max-width: 980px) {
+  .score_board {
+    left: 15px;
+    top: 50px;
+    width: 170px;
+    height: 125px;
+  }
+  .timer_panel {
+    right: 15px;
+    top: 50px;
+    width: 170px;
+    height: 125px;
+  }
+  .stars {
+    left: 170px;
+  }
 }
 
-@media only screen and (max-width: 920px){
-    .score_board{
-        left: 10px;
-        top : 50px;
-        width: 140px;
-        height: 125px;
-    }
-    .timer_panel{
-        right: 10px;
-        top : 50px;
-        width: 140px;
-        height: 125px;
-    }
-    .time ,
-    .score{
-        font-size: 20px;
-    }
-    .stars{
-        left:130px;
-    }
+@media only screen and (max-width: 920px) {
+  .score_board {
+    left: 10px;
+    top: 50px;
+    width: 140px;
+    height: 125px;
+  }
+  .timer_panel {
+    right: 10px;
+    top: 50px;
+    width: 140px;
+    height: 125px;
+  }
+  .time,
+  .score {
+    font-size: 20px;
+  }
+  .stars {
+    left: 130px;
+  }
 }
 
-@media only screen and (max-width: 850px){
-    .score_board{
-        left: 5px;
-        top : 50px;
-        width: 120px;
-        height: 125px;
-    }
-    .timer_panel{
-        right: 5px;
-        top : 50px;
-        width: 120px;
-        height: 125px;
-    }
-    .stars{
-        left:100px;
-    }
+@media only screen and (max-width: 850px) {
+  .score_board {
+    left: 5px;
+    top: 50px;
+    width: 120px;
+    height: 125px;
+  }
+  .timer_panel {
+    right: 5px;
+    top: 50px;
+    width: 120px;
+    height: 125px;
+  }
+  .stars {
+    left: 100px;
+  }
 }
 
-@media only screen and (max-width : 790px){
-    .score_board{
-        margin-left: 20%;
-        top : 470px;
-        width: 80px;
-        height: 80px;
-    }
-    .timer_panel{
-        margin-right: 20%;
-        top : 470px;
-        width: 100px;
-        height: 80px;
-    }
-    .score{
-        display: none;
-    }
-    .time{
-        display: none;
-    }
-    #time_left{
-      top: 50px;
-    }
-    .stars{
-        left:60px;
-    }
+@media only screen and (max-width: 790px) {
+  .score_board {
+    margin-left: 20%;
+    top: 470px;
+    width: 80px;
+    height: 80px;
+  }
+  .timer_panel {
+    margin-right: 20%;
+    top: 470px;
+    width: 100px;
+    height: 80px;
+  }
+  .score {
+    display: none;
+  }
+  .time {
+    display: none;
+  }
+  #time_left {
+    top: 50px;
+  }
+  .stars {
+    left: 60px;
+  }
 }
 
 /* The Modal (background) */
 .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
 
 /* Modal Content */
 .modal-content {
-    text-align: center;
-    background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%; 
+  text-align: center;
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
 }
 
 .emoji {
-    text-align: center;
-    position: relative;
-    font-size :50px;
+  text-align: center;
+  position: relative;
+  font-size: 50px;
 }
 
 /* For play again */
 .modalButton {
-    background-color: green;
-    color: white;
+  background-color: green;
+  color: white;
 }
 
 /*image of the player as the list */
 .image {
-    height:120px;
-    width:120px;
+  height: 120px;
+  width: 120px;
 }
 
 /*increase the image size on hover*/
 .image :hover {
-    width: 150px;
-    height: 150px;
+  width: 150px;
+  height: 150px;
 }
 
 .instruction {
-    font-size: 20px;
+  font-size: 20px;
 }

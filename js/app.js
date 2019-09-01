@@ -208,12 +208,23 @@ Player.prototype.updateScore = function(){
     if (this.currentScore != 0 && this.hasCollided != false) {
         this.currentScore -= 2;
         this.hasCollided = false;
+    document.getElementById('score_now').style.color = "red";
+    document.getElementById('score_now').classList.add("blinking-text")
+    setTimeout(() => {
+        document.getElementById('score_now').classList.remove("blinking-text")
+        }, 1000);
     }
     if(this.hasCrossed != false){
         this.currentScore += 4;
         this.hasCrossed = false;
+    document.getElementById('score_now').style.color = "blue";
+    document.getElementById('score_now').classList.add("zoomIn-text")
+    setTimeout(() => {
+        document.getElementById('score_now').classList.remove("zoomIn-text")
+        }, 1000);
     }
     document.getElementById('score_now').innerHTML = this.currentScore;
+ 
 };
 
 
