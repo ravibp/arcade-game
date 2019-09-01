@@ -25,7 +25,7 @@ var Engine = (function(global) {
         lastTime;
 
     canvas.width = 1200;
-    canvas.height = 900;
+    canvas.height = 1300;
     doc.body.appendChild(canvas);
 
     /* This function serves as the kickoff point for the game loop itself
@@ -121,17 +121,22 @@ var Engine = (function(global) {
         /* This array holds the relative URL to the image used
          * for that particular row of the game level.
          */
+
+        // 'images/grass-block.png',   // Row 1 of 2 of grass
         var rowImages = [
                 'images/water-block.png',   // Top row is water
-                'images/stone-block.png',   // Row 1 of 3 of stone
-                'images/stone-block.png',   // Row 2 of 3 of stone
-                'images/stone-block.png',   // Row 3 of 3 of stone
-                'images/grass-block.png',   // Row 1 of 2 of grass
-                'images/stone-block.png',   // Row 1 of 3 of stone
-                'images/stone-block.png',   // Row 3 of 3 of stone
-                'images/grass-block.png',   // Row 1 of 2 of grass
+                'images/stone-block.png',   // Row 1 of 10 of stone
+                'images/stone-block.png',   // Row 2 of 10 of stone
+                'images/stone-block.png',   // Row 3 of 10 of stone
+                'images/stone-block.png',   // Row 4 of 10 of stone
+
+                'images/stone-block.png',   // Row 5 of 10 of stone
+                'images/stone-block.png',   // Row 9 of 10 of stone
+                'images/stone-block.png',   // Row 9 of 10 of stone
+                'images/stone-block.png',   // Row 9 of 10 of stone
+                'images/grass-block.png',   // Row 1 of 1 of grass
             ],
-            numRows = 8,
+            numRows = 10,
             numCols = 12,
             row, col;
 

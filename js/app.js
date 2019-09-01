@@ -28,18 +28,20 @@ for (var j = 0; j < 5; j += 1) {
  * @param speed - speed of the enemy
  * */
 const GLOBAL_CONSTANTS = {
-    INITAL_POSITION_X: 500,
-    INITAL_POSITION_Y: 550,
-    BOUNDARY_LEFT: 5,
-    BOUNDARY_RIGHT: 1105,
-    BOUNDARY_TOP: -32,
-    BOUNDARY_BOTTOM: 500,
-    NO_OF_ENEMIES: 2000,
-    PLAYER_WIDTH: 20,
-    PLAYER_HEIGHT: 20,
-    ENEMY_WIDTH: 40,
-    ENEMY_HEIGHT: 30,
- }
+  INITAL_POSITION_X: 500,
+  INITAL_POSITION_Y: 710,
+  BOUNDARY_LEFT: 5,
+  BOUNDARY_RIGHT: 1105,
+  BOUNDARY_TOP: -32,
+  BOUNDARY_BOTTOM: 730,
+  NO_OF_ENEMIES: 2000,
+  PLAYER_WIDTH: 20,
+  PLAYER_HEIGHT: 20,
+  ENEMY_WIDTH: 40,
+  ENEMY_HEIGHT: 30,
+  INCREMENT_POSITION_X: 30,
+  INCREMENT_POSITION_Y: 30
+};
 var Enemy = function(sprite, x, y, speed) {
   this.sprite = sprite;
   this.x = x;
@@ -71,27 +73,29 @@ Enemy.prototype.render = function() {
   }
 };
 
-function isCollide(a, b) {  
+function isCollide(a, b) {
   return !(
-      ((a.y + a.height) < (b.y)) ||
-      (a.y > (b.y + b.height)) ||
-      ((a.x + a.width) < b.x) ||
-      (a.x > (b.x + b.width))
+    a.y + a.height < b.y ||
+    a.y > b.y + b.height ||
+    a.x + a.width < b.x ||
+    a.x > b.x + b.width
   );
 }
 /** @description - it continuously compares the position of enemy and player
  *  and detects collision
  */
 Enemy.prototype.checkCol = function() {
-//  below line conditions are optimised for best collision detection experience.
-  let isCollideFlag = isCollide(this, player )
-    if(isCollideFlag) {
-    console.log("collided")
-    // alert("collided 1")
-      //reseting player positions on collision
-    player.y = GLOBAL_CONSTANTS.INITAL_POSITION_X;
-    player.x = GLOBAL_CONSTANTS.INITAL_POSITION_Y;
-    player.lives -= 1;
+  //  below line conditions are optimised for best collision detection experience.
+  let isCollideFlag = isCollide(this, player);
+  if (isCollideFlag) {
+    document.getElementById("scoreBoard-id").style.backgroundColor = "red !important"
+    // alert("aaaa")
+  //reseting player positions on collision
+    player.x = GLOBAL_CONSTANTS.INITAL_POSITION_X;
+    player.y = GLOBAL_CONSTANTS.INITAL_POSITION_Y;
+    if(Player.lives !==0) {
+      player.lives -= 1;
+    }
     livesDisplay(player.lives);
     //condition to check game over due to loss of all lives
     if (player.lives === 0) {
@@ -104,6 +108,7 @@ Enemy.prototype.checkCol = function() {
     player.hasCollided = true;
     player.updateScore();
   }
+
   // if (
   //   this.x+50 > player.x &&
   //   player.x > this.x-10 &&
@@ -112,23 +117,22 @@ Enemy.prototype.checkCol = function() {
   //   console.log("collision 2", this.x, player.x,"and",  this.y, player.y);
   //   document.getElementById("scoreBoard-id").style.backgroundColor = "red !important"
   //   alert("aaaa")
-  // // //reseting player positions on collision
-  // //   player.y = GLOBAL_CONSTANTS.INITAL_POSITION_X;
-  // //   player.x = GLOBAL_CONSTANTS.INITAL_POSITION_Y;
-  // //   player.lives -= 1;
-  // //   livesDisplay(player.lives);
-  // //   //condition to check game over due to loss of all lives
-  // //   if (player.lives === 0) {
-  // //     modal.style.display = "block";
-  // //     modalSetup(player.currentScore, player.lives, false);
-  // //     return;
-  // //   }
-  // //   /** @param hasCollided on player - used to negate 2 points on collision
-  // //    * function to update the score followed to display current score */
-  // //   player.hasCollided = true;
-  // //   player.updateScore();
+  // //reseting player positions on collision
+  //   player.x = GLOBAL_CONSTANTS.INITAL_POSITION_X;
+  //   player.y = GLOBAL_CONSTANTS.INITAL_POSITION_Y;
+  //   player.lives -= 1;
+  //   livesDisplay(player.lives);
+  //   //condition to check game over due to loss of all lives
+  //   if (player.lives === 0) {
+  //     modal.style.display = "block";
+  //     modalSetup(player.currentScore, player.lives, false);
+  //     return;
+  //   }
+  //   /** @param hasCollided on player - used to negate 2 points on collision
+  //    * function to update the score followed to display current score */
+  //   player.hasCollided = true;
+  //   player.updateScore();
   // }
-
 };
 
 /**
@@ -141,7 +145,7 @@ var numberOfEnemies = GLOBAL_CONSTANTS.NO_OF_ENEMIES;
 /**@description - instantiating allenemies objects with different values from different functions
  * that return positions and speeds for the enemy objects
  */
-for (var i = 0; i <  GLOBAL_CONSTANTS.NO_OF_ENEMIES; i += 1) {
+for (var i = 0; i < GLOBAL_CONSTANTS.NO_OF_ENEMIES; i += 1) {
   // for (var i = 0; i < numberOfEnemies; i += 1) {
   allEnemies[i] = new Enemy(
     "images/enemy-bug.png",
@@ -153,17 +157,39 @@ for (var i = 0; i <  GLOBAL_CONSTANTS.NO_OF_ENEMIES; i += 1) {
 
 /**@description - this function equally distributes the enemies among 3 rows */
 function getRow(j) {
-  switch (j % 3) {
+  switch (j % 10) {
     case 0:
       return 67;
       break;
-
     case 1:
       return 150;
       break;
-
     case 2:
       return 233;
+      break;
+    case 3:
+      return 400;
+      break;
+    case 4:
+      return 500;
+      break;
+    case 5:
+      return 67;
+      break;
+    case 6:
+      return 550;
+      break;
+    case 7:
+      return 150;
+      break;
+    case 8:
+      return 233;
+      break;
+    case 9:
+      return 400;
+      break;
+    case 10:
+      return 550;
       break;
   }
 }
@@ -171,6 +197,7 @@ function getRow(j) {
 /**@description - get different X poosition for the enemy(higher negative arrive late to display) */
 function getX(k) {
   var temporaryX = 0;
+  // return 10;
   if (k % 3 === 0) {
     temporaryX = (k / 3) * -320;
     return temporaryX;
@@ -234,6 +261,7 @@ var player = new Player();
  * position on successfull cross and a call to update score
  */
 Player.prototype.update = function() {
+  console.log("player", this.x, this.y)
   if (this.y < GLOBAL_CONSTANTS.BOUNDARY_TOP) {
     this.hasCrossed = true;
     this.updateScore();
@@ -299,39 +327,33 @@ Player.prototype.render = function() {
  */
 Player.prototype.handleInput = function(k) {
   var rockIsThere;
-  let valueX = 30;
-  let valueY = 30;
   switch (k) {
     case "up":
       if (this.y <= GLOBAL_CONSTANTS.BOUNDARY_TOP) {
         this.y = GLOBAL_CONSTANTS.INITAL_POSITION_Y;
       } else {
-        // this.y -= 83;
-        this.y -= valueY;
+        this.y -= GLOBAL_CONSTANTS.INCREMENT_POSITION_Y;
         break;
       }
     case "down":
       if (this.y > GLOBAL_CONSTANTS.BOUNDARY_BOTTOM) {
         break;
       } else {
-        // this.y += 83;
-        this.y += valueY;
+        this.y += GLOBAL_CONSTANTS.INCREMENT_POSITION_Y;
         break;
       }
     case "left":
       if (this.x < GLOBAL_CONSTANTS.BOUNDARY_LEFT) {
         break;
       } else {
-        // this.x -= 101;
-        this.x -= valueX;
+        this.x -= GLOBAL_CONSTANTS.INCREMENT_POSITION_X;
         break;
       }
     case "right":
       if (this.x > GLOBAL_CONSTANTS.BOUNDARY_RIGHT) {
         break;
       } else {
-        // this.x += 101;
-        this.x += valueX;
+        this.x += GLOBAL_CONSTANTS.INCREMENT_POSITION_X;
         break;
       }
   }
@@ -532,7 +554,7 @@ function Restart() {
   timeUnit = 300;
   gameTimer = setInterval(myTimer, 1000);
   allEnemies = [];
-  numberOfEnemies =  GLOBAL_CONSTANTS.NO_OF_ENEMIES;
+  numberOfEnemies = GLOBAL_CONSTANTS.NO_OF_ENEMIES;
   gameOver = false;
 
   for (var i = 0; i < numberOfEnemies; i += 1) {

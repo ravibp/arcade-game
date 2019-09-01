@@ -3,6 +3,9 @@ body {
   position: relative;
 }
 
+canvas {
+  zoom: 70%;
+}
 /* scoreboard to display current score */
 .score_board {
   background-color: #74c568;
