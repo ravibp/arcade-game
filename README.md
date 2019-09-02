@@ -1,14 +1,41 @@
-classic-arcade-game
+frontend-nanodegree-arcade-game
 ===============================
+## Developed in Udacity course and self enhanced By Ravi BP (In Progress)
+## Table of Contents
 
-##Getting Started
+* [Instructions](#instructions)
+* [Contributing](#contributing)
+* Built With
 
-This is a game that I made to work like the classic game Frogger. To play the game, download all of the files and open the index.html file with your browser.
+## Instructions
+It is the exciting game to cross the path avoiding collision with incoming enemies within a specific time. Player can also collect the gem to boost up the score.Player have to score the best points possible with 10 lives in hand within 5 minutes.
 
-##Controls
+### How to Run?
 
-There are only 4 buttons that this game will register. The direction keys on your keyboard are the only keys that will do anything. 'Up' will move the character up one space. 'Down' will move the character down one space. 'Right' will move the character right one space. 'Left' will move the character left one space. That is unless you are near a rock. The character cannot move through the rocks.
+* Download or Clone the Repository
+* Open the project directory.
+* Run `index.html`
+This will open up the game in the browser
 
-##Objective
+### How to Play?
 
-The objective of the game is to make it to the water without touching any of the bugs. If you touch a bug, you will respawn where you started. When you reach the water, you will respawn where you started, as will all of the bugs.
+* Click on the player avatar of your wish on the welcome modal that appeared right after opening the file.
+* Water and Grass are safe areas(bug-free).
+* Use Arrow keys on your keyboard to move the player and cross the road avoiding collision with enemies.
+* Reaching the water fetches ypu 4 points.
+* Collision with enemies lose you 2 points(net score won't decrease below zero).
+* Collect gems that appear for short time to boost your score.
+* Difficulty level of the game increases along with the elapsed time.Try to play well at the beginning for best scores. 
+* Remember you have only 10 lives in a game and score as more as possible within 5 minutes.
+* After game over, you can replay the game by clicking the play again button on the modal.
+* Refresh the page to reset the game (including when you win or lose)
+
+## Contributing
+
+I encourage you to contribute to Arcade Game!! You can contribute to this project with the addition of leaderboard,difficulty levels and improved gaming experience. Please read CONTRIBUTING.md for details on our code of conduct, and the process for submitting pull requests to us.
+
+
+## Built With
+
+* Microsoft visual Studio code editor
+* Google chrome Browser versin 60.0.3112.113 
