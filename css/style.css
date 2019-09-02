@@ -2,20 +2,22 @@ body {
   text-align: center;
   position: relative;
   overflow: hidden;
+  cursor: default;
 }
 
 canvas {
-  zoom: 70%;
+  width: 50%;
 }
 /* scoreboard to display current score */
 .score_board {
   background-color: #74c568;
   position: absolute;
-  left: 165px;
+  left: 0px;
   top: 50px;
   width: 200px;
   height: 125px;
   border: 3px solid black;
+  margin-left: 5%;
 }
 /* update score styling */
 .blinking-text {
@@ -62,11 +64,12 @@ canvas {
 .timer_panel {
   background-color: #74c568;
   position: absolute;
-  right: 165px;
+  right: 0px;
   top: 50px;
   width: 200px;
   height: 125px;
   border: 3px solid black;
+  margin-right: 5%;
 }
 
 /* stars list to display remaining lives */
@@ -107,13 +110,11 @@ canvas {
 /* multi break-point responsive design for different screen widths */
 @media only screen and (max-width: 1275px) {
   .score_board {
-    left: 165px;
     top: 50px;
     width: 170px;
     height: 125px;
   }
   .timer_panel {
-    right: 165px;
     top: 50px;
     width: 170px;
     height: 125px;
@@ -125,13 +126,11 @@ canvas {
 
 @media only screen and (max-width: 1210px) {
   .score_board {
-    left: 135px;
     top: 50px;
     width: 170px;
     height: 125px;
   }
   .timer_panel {
-    right: 135px;
     top: 50px;
     width: 170px;
     height: 125px;
@@ -143,13 +142,11 @@ canvas {
 
 @media only screen and (max-width: 1160px) {
   .score_board {
-    left: 105px;
     top: 50px;
     width: 170px;
     height: 125px;
   }
   .timer_panel {
-    right: 105px;
     top: 50px;
     width: 170px;
     height: 125px;
@@ -161,13 +158,11 @@ canvas {
 
 @media only screen and (max-width: 1100px) {
   .score_board {
-    left: 75px;
     top: 50px;
     width: 170px;
     height: 125px;
   }
   .timer_panel {
-    right: 75px;
     top: 50px;
     width: 170px;
     height: 125px;
@@ -179,13 +174,11 @@ canvas {
 
 @media only screen and (max-width: 1040px) {
   .score_board {
-    left: 45px;
     top: 50px;
     width: 170px;
     height: 125px;
   }
   .timer_panel {
-    right: 45px;
     top: 50px;
     width: 170px;
     height: 125px;
@@ -197,13 +190,11 @@ canvas {
 
 @media only screen and (max-width: 980px) {
   .score_board {
-    left: 15px;
     top: 50px;
     width: 170px;
     height: 125px;
   }
   .timer_panel {
-    right: 15px;
     top: 50px;
     width: 170px;
     height: 125px;
@@ -215,13 +206,13 @@ canvas {
 
 @media only screen and (max-width: 920px) {
   .score_board {
-    left: 10px;
+    /* left: 10px; */
     top: 50px;
     width: 140px;
     height: 125px;
   }
   .timer_panel {
-    right: 10px;
+    /* right: 10px; */
     top: 50px;
     width: 140px;
     height: 125px;
@@ -237,13 +228,11 @@ canvas {
 
 @media only screen and (max-width: 850px) {
   .score_board {
-    left: 5px;
     top: 50px;
     width: 120px;
     height: 125px;
   }
   .timer_panel {
-    right: 5px;
     top: 50px;
     width: 120px;
     height: 125px;
@@ -255,13 +244,11 @@ canvas {
 
 @media only screen and (max-width: 790px) {
   .score_board {
-    margin-left: 20%;
     top: 470px;
     width: 80px;
     height: 80px;
   }
   .timer_panel {
-    margin-right: 20%;
     top: 470px;
     width: 100px;
     height: 80px;
@@ -324,10 +311,37 @@ canvas {
 
 /*increase the image size on hover*/
 .image :hover {
+  cursor: pointer;
   width: 150px;
   height: 150px;
 }
 
 .instruction {
   font-size: 20px;
+}
+
+/* Difficuilty modal styles*/
+
+.difficultyList {
+  list-style: none;
+  padding: 0px;
+}
+.difficulty {
+  cursor: pointer;
+  width: fit-content;
+  margin: auto;
+  color: black;
+  
+}
+.difficultyList:nth-child(0):hover {
+  color: blue;
+  font-weight: 1000;
+}
+.difficultyList:nth-child(1):hover {
+  color: blue;
+  font-weight: 1000;
+}
+.difficultyList:nth-child(2):hover {
+  color: blue;
+  font-weight: 1000;
 }

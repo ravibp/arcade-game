@@ -1,11 +1,14 @@
 /** @param welcomeModal - Get the modal to select the player */
 const welcomeModal = document.getElementById("welcomeModal");
+const difficultyModal = document.getElementById("difficultyModal");
 
 /**  @description - display the modal on startup */
 welcomeModal.style.display = "block";
+difficultyModal.style.display = "none";
 
 /**@param playerPicker - get the images of the player */
 const playerPicker = document.getElementsByClassName("image");
+const difficultyPicker = document.getElementsByClassName("difficulty");
 
 /** @description -  @param playerSelected - set to false to restrict the game starting before player is selected */
 var playerSelected = false;
@@ -17,10 +20,70 @@ for (var j = 0; j < 5; j += 1) {
      *  and get the images source address of the clicked item
      * **/
     welcomeModal.style.display = "none";
-    playerSelected = true;
+    difficultyModal.style.display = "block";
+
     player.sprite = this.childNodes[0].attributes[0].nodeValue;
   });
 }
+let readyToPlayFlag = false;
+const GLOBAL_CONSTANTS = {
+  INITAL_POSITION_X: 500,
+  INITAL_POSITION_Y: 889,
+  BOUNDARY_LEFT: 5,
+  BOUNDARY_RIGHT: 1105,
+  BOUNDARY_TOP: -32,
+  BOUNDARY_BOTTOM: 889,
+  NO_OF_ENEMIES: 2000,
+  PLAYER_WIDTH: 20,
+  PLAYER_HEIGHT: 20,
+  ENEMY_WIDTH: 40,
+  ENEMY_HEIGHT: 30,
+  INCREMENT_POSITION_X: 30,
+  INCREMENT_POSITION_Y: 30,
+  ENEMY_ROWS: populateRows(),
+  DIFFICULTY: "EASY"
+};
+
+/**@description - instantiating allenemies objects with different values from different functions
+ * that return positions and speeds for the enemy objects
+ */
+function generateEnemies() {
+  for (var i = 0; i < GLOBAL_CONSTANTS.NO_OF_ENEMIES; i += 1) {
+    allEnemies[i] = new Enemy(
+      "images/enemy-bug.png",
+      getX(i),
+      getRow(i),
+      getSpeed(i) // check for NaN error
+    );
+  }
+}
+difficultyPicker[0].addEventListener("click", function() {
+  playerSelected = true;
+  readyToPlayFlag = true;
+  GLOBAL_CONSTANTS.INCREMENT_POSITION_Y = 60;
+  GLOBAL_CONSTANTS.INCREMENT_POSITION_Y = 60;
+  GLOBAL_CONSTANTS.DIFFICULTY = "EASY";
+  difficultyModal.style.display = "none";
+  generateEnemies()
+});
+difficultyPicker[1].addEventListener("click", function() {
+  playerSelected = true;
+  readyToPlayFlag = true;
+  GLOBAL_CONSTANTS.INCREMENT_POSITION_Y = 60;
+  GLOBAL_CONSTANTS.INCREMENT_POSITION_Y = 60;
+  GLOBAL_CONSTANTS.DIFFICULTY = "MEDIUM";
+  difficultyModal.style.display = "none";
+  generateEnemies()
+});
+difficultyPicker[2].addEventListener("click", function() {
+  playerSelected = true;
+  readyToPlayFlag = true;
+  GLOBAL_CONSTANTS.INCREMENT_POSITION_Y = 30;
+  GLOBAL_CONSTANTS.INCREMENT_POSITION_Y = 30;
+  GLOBAL_CONSTANTS.DIFFICULTY = "HARD";
+  difficultyModal.style.display = "none";
+  generateEnemies()
+});
 
 /** @description - Enemies our player must avoid
  * @param sprite - image source address
@@ -40,24 +103,7 @@ function populateRows() {
   }
   return row;
 }
-const GLOBAL_CONSTANTS = {
-  INITAL_POSITION_X: 500,
-  INITAL_POSITION_Y: 889,
-  BOUNDARY_LEFT: 5,
-  BOUNDARY_RIGHT: 1105,
-  BOUNDARY_TOP: -32,
-  BOUNDARY_BOTTOM: 889,
-  NO_OF_ENEMIES: 2000,
-  PLAYER_WIDTH: 20,
-  PLAYER_HEIGHT: 20,
-  ENEMY_WIDTH: 40,
-  ENEMY_HEIGHT: 30,
-  INCREMENT_POSITION_Y: 60,
-  INCREMENT_POSITION_X: 60,
-  // INCREMENT_POSITION_Y: 30,
-  // INCREMENT_POSITION_Y: 30,
-  ENEMY_ROWS: populateRows()
-};
+
 var Enemy = function(sprite, x, y, speed) {
   this.sprite = sprite;
   this.x = x;
@@ -104,8 +150,7 @@ Enemy.prototype.checkCol = function() {
   //  below line conditions are optimised for best collision detection experience.
   let isCollideFlag = isCollide(this, player);
   if (isCollideFlag) {
-    // console.log("iscollide", this.x, player.x, "and", this.y, player.y);
-      document.getElementById("scoreBoard-id").style.background =
+    document.getElementById("scoreBoard-id").style.background =
       "red !important";
     // //reseting player positions on collision
     player.x = GLOBAL_CONSTANTS.INITAL_POSITION_X;
@@ -134,17 +179,8 @@ Enemy.prototype.checkCol = function() {
 var allEnemies = [];
 var numberOfEnemies = GLOBAL_CONSTANTS.NO_OF_ENEMIES;
 
-/**@description - instantiating allenemies objects with different values from different functions
- * that return positions and speeds for the enemy objects
- */
-for (var i = 0; i < GLOBAL_CONSTANTS.NO_OF_ENEMIES; i += 1) {
-  allEnemies[i] = new Enemy(
-    "images/enemy-bug.png",
-    getX(i),
-    getRow(i),
-    getSpeed(i) // check for NaN error
-  );
-}
+
+
 
 /**@description - this function equally distributes the enemies among all rows */
 function getRow(j) {
@@ -174,31 +210,45 @@ function getX(k) {
  * also increase the speed as more time elapsed
  */
 function getSpeed(k) {
+  let defaultSpeedValues = [1000, 790, 950, 600, 430, 900, 400, 500, 1000, 950];
+  let difficultySpeed = {
+    hard: defaultSpeedValues,
+    medium: defaultSpeedValues.map(value => value / 2),
+    easy: defaultSpeedValues.map(value => value / 4)
+  };
+  if (GLOBAL_CONSTANTS.DIFFICULTY === "EASY") {
+    defaultSpeedValues = difficultySpeed.easy;
+  } else if (GLOBAL_CONSTANTS.DIFFICULTY === "MEDIUM") {
+    defaultSpeedValues = difficultySpeed.medium;
+  } else {
+    defaultSpeedValues = difficultySpeed.hard;
+  }
+
   if (k % 3 === 0) {
     if (k <= numberOfEnemies * 0.2) {
-      return 1000;
+      return defaultSpeedValues[0];
     } else if (k > numberOfEnemies * 0.2 && k <= numberOfEnemies * 0.4) {
-      return 790;
+      return defaultSpeedValues[1];
     } else if (k > numberOfEnemies * 0.4 && k <= numberOfEnemies * 0.6) {
-      return 950;
+      return defaultSpeedValues[2];
     } else {
-      return 600;
+      return defaultSpeedValues[3];
     }
   } else if (k % 3 === 1) {
     if (k <= numberOfEnemies / 5) {
-      return 430;
+      return defaultSpeedValues[4];
     } else if (k > numberOfEnemies * 0.3 && k <= numberOfEnemies * 0.5) {
-      return 900;
+      return defaultSpeedValues[5];
     } else if (k > numberOfEnemies * 0.6) {
-      return 400;
+      return defaultSpeedValues[6];
     }
   } else if (k % 3 === 2) {
     if (k <= numberOfEnemies / 5) {
-      return 500;
+      return defaultSpeedValues[7];
     } else if (k > numberOfEnemies * 0.2 && k <= numberOfEnemies * 0.5) {
-      return 1000;
+      return defaultSpeedValues[8];
     } else if (k > numberOfEnemies * 0.5) {
-      return 950;
+      return defaultSpeedValues[9];
     }
   }
   return 1000;
