@@ -442,11 +442,11 @@ var Gem = function(sprite, onTime, offTime, xPos, yPos, score) {
 };
 
 // arbitrarily assigning above values to different gem objects
-var gem1 = new Gem("images/Gem orange.png", 295, 287, 202, -16, 20);
-var gem2 = new Gem("images/Gem Green.png", 220, 214, 303, -16, 15);
+var gem1 = new Gem("images/gem-orange.png", 295, 287, 202, -16, 20);
+var gem2 = new Gem("images/gem-green.png", 220, 214, 303, -16, 15);
 var gem3 = new Gem("images/Gem-Blue.png", 170, 164, 404, -16, 25);
 var gem4 = new Gem("images/Heart.png", 85, 78, 303, -16, 30);
-var gem5 = new Gem("images/star.png", 60, 53, 404, -16, 40);
+var gem5 = new Gem("images/Star.png", 60, 53, 404, -16, 40);
 
 //array of gems
 var allGems = [gem1, gem2, gem3, gem4, gem5];
@@ -488,7 +488,7 @@ Gem.prototype.gemCollect = function() {
  * @param x and @param y - position of the rock
  */
 var Rock = function() {
-  this.sprite = "images/rock.png";
+  this.sprite = "images/Rock.png";
   this.x = 202;
   this.y = 316;
 };
