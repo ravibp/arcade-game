@@ -105,9 +105,9 @@ var Engine = (function(global) {
     }
 
     function checkCollect(){
-        allGems.forEach(function (gem) {
-            gem.gemCollect();
-        });
+        // allGems.forEach(function (gem) {
+        //     gem.gemCollect();
+        // });
     }
     
 
@@ -176,9 +176,9 @@ var Engine = (function(global) {
 
         player.render();
         
-        allGems.forEach(function(gem){
-        gem.render();
-        });
+        // allGems.forEach(function(gem){
+        // gem.render();
+        // });
 
         rock.render();
     }
@@ -200,10 +200,10 @@ var Engine = (function(global) {
         'images/grass-block.png',
         'images/enemy-bug.png',
         'images/char-boy.png',
-        'images/Gem orange.png',
-        'images/Gem Green.png',
-        'images/Gem-Blue.png',
-        'images/Heart.png',
+        'images/gem-orange.png',
+        'images/gem-green.png',
+        'images/gem-blue.png',
+        'images/heart.png',
         'images/star.png',
         'images/rock.png',
         'images/char-cat-girl.png',
