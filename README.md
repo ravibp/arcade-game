@@ -1,6 +1,6 @@
 frontend-nanodegree-arcade-game
 ===============================
-## Developed in Udacity course and self enhanced By Ravi BP (In Progress)
+## Developed in Udacity course and self enhanced By Ravi BP
 ## Table of Contents
 
 * [Instructions](#instructions)
